@@ -1,42 +1,26 @@
-class HypoClient:
-    def __init__(self):
-        self.speed = 0
-        self.odometer = 0
-        self.time = 0
+import socket
 
-    def say_state(self):
-        print("I'm going {} kph!".format(self.speed))
+HOST = "localhost"
+PORT = 8080
 
-    def accelerate(self):
-        self.speed += 5
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((HOST, PORT))
 
-    def brake(self):self
-
-    def step(self):
-        self.odometer += self.speed
-        self.time += 1
-
-    def average_speed(self):
-        if self.time !=0:
-            return self.odometer / self.time
-
-
-if __name__ == '__main__':
-    my_car = HypoClient()
-    print("I'm a car!")
+def recv_basic(the_socket):
     while True:
-        action = input("What should I do? [A]ccelerate, [B]rake, "
-            "show [O]dometer, or show average [S]peed?").upper()
-        if action not in "ABOS" or len(action) != 1:
-            print("I don't know how to do that")
-            continue
-        if action == 'A':
-            my_car.accelerate()
-        elif action == 'B':
-            my_car.brake()
-        elif action == 'O':
-            print("The car has driven {} kilometers".format(my_car.odometer))
-        elif action == 'S':
-            print("The car's average speed was {} kph".format(my_car.average_speed()))
-        my_car.step()
-        my_car.say_state()
+        data = the_socket.recv(1024)
+        print(data)
+        if not data:break
+    return data
+
+sock.sendall(b"Hello\n")
+dataa = recv_basic(sock)
+
+if(data == b'olleH\n'):
+    sock.sendall(b"Bye\n")
+    data = sock.recv(1024)
+    print("2)", data)
+
+    if(data == "eyB\n" ):
+        sock.close()
+        print("Socket closed")
