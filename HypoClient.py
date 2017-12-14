@@ -4,16 +4,28 @@ HOST = "localhost"
 PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((HOST, PORT))
 
-def recv_basic(the_socket):
+def SockConnect():
+    sock.connect((HOST, PORT))
+    print("socket connected")
+    return sock
+
+def SockClose():
+    sock.close()
+    print("socket closed")
+
+def SockSendAll(data):
+    sock.sendall(data)
+    '''print("send data:" + data.decode('utf-8'))'''
+
+def SockReceive(socket):
     while True:
-        data = the_socket.recv(1024)
-        print(data)
+        data = socket.recv(1024)
+        print("received data:" + data.decode('utf-8'))
         if not data:break
     return data
 
-sock.sendall(b"Hello\n")
+'''sock.sendall(b"Hello\n")
 dataa = recv_basic(sock)
 
 if(data == b'olleH\n'):
@@ -23,4 +35,4 @@ if(data == b'olleH\n'):
 
     if(data == "eyB\n" ):
         sock.close()
-        print("Socket closed")
+        print("Socket closed")'''
