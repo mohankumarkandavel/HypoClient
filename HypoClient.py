@@ -12,15 +12,15 @@ def SockConnect():
 
 def SockClose():
     sock.close()
-    print("socket closed")
+    print("client socket closed")
 
 def SockSendAll(data):
-    sock.sendall(data)
-    '''print("send data:" + data.decode('utf-8'))'''
+    sock.sendall(data + b'\n')
+   
 
-def SockReceive(socket):
+def SockReceive():
     while True:
-        data = socket.recv(1024)
+        data = sock.recv(1024)
         print("received data:" + data.decode('utf-8'))
         if not data:break
     return data
